@@ -43,10 +43,17 @@ Fasta priser i kassan: SE 49 kr, DK/FI 99 kr, NO 129 kr. Norge är utanför EU �
 
 ## Deploy
 
-Koppla GitHub-repot till Vercel. Sätt samma env-variabler där. `NEXT_PUBLIC_SITE_URL` ska vara preview-URL:en tills DNS pekas om.
+Bygget är Vercel-klart (`npm run build` går igenom). Preview-URL får ni när ni kopplar projektet:
+
+1. Skapa ett GitHub-repo och pusha `master`.
+2. Importera repot på [vercel.com/new](https://vercel.com/new).
+3. Sätt miljövariablerna ovan. `NEXT_PUBLIC_SITE_URL` ska vara preview-URL:en (`https://….vercel.app`) tills DNS pekas om.
+4. Stripe-webhook: `https://<er-url>/api/webhooks/stripe` för `checkout.session.completed`.
+
+`npx vercel` kräver inloggning (`vercel login`). Anonym deploy av Next.js 16 via CLI är inte pålitlig — använd Git-kopplingen.
 
 Befintlig sajt på punkaslangen.se lämnas orörd tills ni har domäninlogg och byter A/CNAME till Vercel.
 
 ## Design
 
-Cream `#fff8f1`, voltage blue `#006eff`, outlined pills, Bodoni Moda + Inter som ersättning för Editorial New / Founders Grotesk.
+Cream `#ebe4d8` (stone), ockra `#d58922`, text `#312f27` (carbon). Manrope i UI. Ockrafärgade pill-knappar.

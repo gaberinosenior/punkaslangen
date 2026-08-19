@@ -8,6 +8,7 @@ export const PRODUCT = {
   priceOre: 9900,
   currency: "sek",
   vatPercent: 25,
+  vimeoId: "368576595",
 } as const;
 
 export const PRICE_KR = PRODUCT.priceOre / 100;

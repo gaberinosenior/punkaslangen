@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { company } from "@/lib/company";
+import { Logo } from "./Nav";
 
 const links = [
   { href: "/leverans", label: "Leverans" },
@@ -9,22 +10,20 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-ash px-6 py-43 md:px-12 xl:px-144">
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-29 md:flex-row md:items-end md:justify-between">
+    <footer className="mt-auto bg-carbon px-6 py-16 text-paper md:px-12">
+      <div className="mx-auto flex max-w-[1200px] flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="font-sans text-body-sm font-light uppercase tracking-[-0.02em] text-voltage-blue">
-            {company.name}
-          </p>
-          <p className="mt-11 max-w-[28rem] font-sans text-body-sm font-light text-ink">
+          <Logo className="h-9 w-auto" />
+          <p className="mt-4 max-w-[28rem] text-caption text-paper/80">
             En 4 meter lång räddare i nöden. 99 kr inkl. moms. Frakt tillkommer.
           </p>
         </div>
-        <ul className="flex flex-wrap gap-x-29 gap-y-11">
+        <ul className="flex flex-wrap gap-x-8 gap-y-3">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="font-sans text-body-sm font-light uppercase tracking-[-0.02em] text-voltage-blue transition-opacity hover:opacity-70"
+                className="text-caption font-bold text-paper transition-opacity hover:opacity-70"
               >
                 {link.label}
               </Link>
@@ -32,6 +31,9 @@ export function Footer() {
           ))}
         </ul>
       </div>
+      <p className="mx-auto mt-10 max-w-[1200px] text-caption text-ash">
+        {company.email}
+      </p>
     </footer>
   );
 }

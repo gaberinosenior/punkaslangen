@@ -16,6 +16,9 @@ type Props = {
   stripeConfigured: boolean;
 };
 
+const fieldClass =
+  "mt-3 w-full rounded-input border border-ash bg-fog px-4 py-3 text-body text-carbon outline-none focus:border-ochre focus:ring-2 focus:ring-ochre";
+
 export function BuyForm({ stock, stripeConfigured }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [country, setCountry] = useState<ShippingCountry>("SE");
@@ -61,22 +64,18 @@ export function BuyForm({ stock, stripeConfigured }: Props) {
 
   if (soldOut) {
     return (
-      <p className="text-center font-sans text-body font-light uppercase tracking-[-0.02em] text-voltage-blue">
-        Slutsåld
-      </p>
+      <p className="text-center font-bold text-carbon">Slutsåld</p>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto w-full max-w-[600px] space-y-29">
+    <form onSubmit={onSubmit} className="mx-auto w-full max-w-[600px] space-y-7">
       <label className="block">
-        <span className="font-sans text-body-sm font-light uppercase tracking-[-0.02em] text-voltage-blue">
-          Antal
-        </span>
+        <span className="text-caption font-bold text-carbon">Antal</span>
         <select
           value={quantity}
           onChange={(event) => setQuantity(Number(event.target.value))}
-          className="mt-11 w-full border border-ash bg-cream px-20 py-14 font-sans text-body font-light text-ink outline-none"
+          className={fieldClass}
         >
           {Array.from({ length: maxQty }, (_, i) => i + 1).map((n) => (
             <option key={n} value={n}>
@@ -87,15 +86,13 @@ export function BuyForm({ stock, stripeConfigured }: Props) {
       </label>
 
       <label className="block">
-        <span className="font-sans text-body-sm font-light uppercase tracking-[-0.02em] text-voltage-blue">
-          Leveransland
-        </span>
+        <span className="text-caption font-bold text-carbon">Leveransland</span>
         <select
           value={country}
           onChange={(event) =>
             setCountry(event.target.value as ShippingCountry)
           }
-          className="mt-11 w-full border border-ash bg-cream px-20 py-14 font-sans text-body font-light text-ink outline-none"
+          className={fieldClass}
         >
           {SHIPPING_COUNTRIES.map((code) => (
             <option key={code} value={code}>
@@ -106,23 +103,19 @@ export function BuyForm({ stock, stripeConfigured }: Props) {
       </label>
 
       {SHIPPING[country].note ? (
-        <p className="font-sans text-body-sm font-normal text-ink">
-          {SHIPPING[country].note}
-        </p>
+        <p className="text-caption text-carbon">{SHIPPING[country].note}</p>
       ) : null}
 
-      <div className="border-t border-ash pt-29">
+      <div className="border-t border-ash pt-7">
         <Row label={`${quantity} × Punkaslangen`} value={formatSek(productTotal)} />
         <Row label="Frakt" value={formatSek(shipping)} />
         <Row label="Totalt inkl. moms" value={formatSek(total)} strong />
       </div>
 
-      {error ? (
-        <p className="font-sans text-body-sm font-normal text-voltage-blue">{error}</p>
-      ) : null}
+      {error ? <p className="text-caption font-bold text-ochre">{error}</p> : null}
 
       <div className="flex justify-center">
-        <OutlinedButton type="submit" disabled={pending}>
+        <OutlinedButton type="submit" disabled={pending} size="hero">
           {pending ? "Öppnar kassa…" : "Gå till betalning"}
         </OutlinedButton>
       </div>
@@ -140,15 +133,11 @@ function Row({
   strong?: boolean;
 }) {
   return (
-    <div className="flex items-baseline justify-between gap-20 py-11">
-      <span
-        className={`font-sans ${strong ? "text-body font-light uppercase text-voltage-blue" : "text-body-sm font-normal text-ink"}`}
-      >
+    <div className="flex items-baseline justify-between gap-5 py-3">
+      <span className={strong ? "font-bold text-carbon" : "text-caption text-carbon"}>
         {label}
       </span>
-      <span
-        className={`font-sans ${strong ? "text-body-lg font-light text-voltage-blue" : "text-body font-light text-ink"}`}
-      >
+      <span className={strong ? "text-heading-sm font-extrabold text-carbon" : "text-body text-carbon"}>
         {value}
       </span>
     </div>

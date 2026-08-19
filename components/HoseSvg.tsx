@@ -16,8 +16,8 @@ export function HoseSvg({ className }: Props) {
         cy="214"
         rx="168"
         ry="118"
-        stroke="#006eff"
-        strokeOpacity="0.22"
+        stroke="#1a1a1a"
+        strokeOpacity="0.35"
         strokeWidth="18"
       />
       <ellipse
@@ -25,8 +25,8 @@ export function HoseSvg({ className }: Props) {
         cy="208"
         rx="132"
         ry="88"
-        stroke="#006eff"
-        strokeOpacity="0.38"
+        stroke="#1a1a1a"
+        strokeOpacity="0.5"
         strokeWidth="16"
       />
       <ellipse
@@ -34,8 +34,8 @@ export function HoseSvg({ className }: Props) {
         cy="202"
         rx="96"
         ry="58"
-        stroke="#006eff"
-        strokeOpacity="0.55"
+        stroke="#1a1a1a"
+        strokeOpacity="0.7"
         strokeWidth="14"
       />
       <ellipse
@@ -43,28 +43,28 @@ export function HoseSvg({ className }: Props) {
         cy="198"
         rx="62"
         ry="32"
-        stroke="#006eff"
-        strokeOpacity="0.7"
+        stroke="#1a1a1a"
+        strokeOpacity="0.85"
         strokeWidth="12"
       />
       <path
         d="M258 198c-38-4-72 18-86 48"
-        stroke="#006eff"
-        strokeOpacity="0.8"
+        stroke="#1a1a1a"
+        strokeOpacity="0.9"
         strokeWidth="12"
         strokeLinecap="round"
       />
       <path
         d="M382 198c38-4 72 18 86 48"
-        stroke="#006eff"
-        strokeOpacity="0.8"
+        stroke="#1a1a1a"
+        strokeOpacity="0.9"
         strokeWidth="12"
         strokeLinecap="round"
       />
-      <rect x="154" y="246" width="36" height="18" rx="3" fill="#000" />
-      <rect x="162" y="240" width="20" height="8" rx="1" fill="#000" />
-      <rect x="450" y="246" width="36" height="18" rx="3" fill="#000" />
-      <rect x="458" y="240" width="20" height="8" rx="1" fill="#000" />
+      <rect x="154" y="246" width="36" height="18" rx="3" fill="#c9a227" />
+      <rect x="162" y="240" width="20" height="8" rx="1" fill="#c9a227" />
+      <rect x="450" y="246" width="36" height="18" rx="3" fill="#c5c8cc" />
+      <rect x="458" y="240" width="20" height="8" rx="1" fill="#c5c8cc" />
       <path
         d="M172 236v-10M468 236v-10"
         stroke="#000"

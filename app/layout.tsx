@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { PRODUCT } from "@/lib/product";
 import "./globals.css";
 
-const display = Bodoni_Moda({
+const sans = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-editorial-new",
-  display: "swap",
-});
-
-const grotesk = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400"],
-  variable: "--font-founders-grotesk",
+  weight: ["400", "700", "800"],
+  variable: "--font-roobert",
   display: "swap",
 });
 
@@ -38,11 +31,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="sv"
-      className={`${display.variable} ${grotesk.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col bg-cream text-ink">
+    <html lang="sv" className={`${sans.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col bg-stone font-sans text-carbon">
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

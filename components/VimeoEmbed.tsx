@@ -5,17 +5,14 @@ type Props = {
 export function VimeoEmbed({ videoId }: Props) {
   if (!videoId) {
     return (
-      <div className="mx-auto flex aspect-video w-full max-w-[900px] items-center justify-center border border-ash bg-cream px-30 text-center">
-        <p className="max-w-[28rem] font-sans text-body font-light text-voltage-blue">
-          Filmen bäddas in här så snart Vimeo-id finns i{" "}
-          <span className="uppercase">NEXT_PUBLIC_VIMEO_ID</span>.
-        </p>
+      <div className="mx-auto flex aspect-video w-full max-w-[900px] items-center justify-center rounded-card bg-fog px-10 text-center">
+        <p className="max-w-[28rem] text-body text-carbon">Filmen saknas just nu.</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto aspect-video w-full max-w-[900px] overflow-hidden border border-ash">
+    <div className="mx-auto aspect-video w-full max-w-[900px] overflow-hidden rounded-card">
       <iframe
         title="Så här fungerar Punkaslangen"
         src={`https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0`}
