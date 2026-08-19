@@ -35,7 +35,11 @@ export default function TermsPage() {
           Reklamation av felaktig vara görs utan dröjsmål till {company.email}.
           Konsumentköplagen gäller.
         </p>
-        <p>Produktsäkerhet (GPSR): {company.responsiblePerson}.</p>
+        <p>
+          Produktsäkerhet (GPSR): Tillverkare {company.manufacturer.name},{" "}
+          {company.manufacturer.address}, {company.manufacturer.postal},{" "}
+          {company.manufacturer.country}. Tel {company.manufacturer.phone}.
+        </p>
         <p>
           Svensk rätt tillämpas. Tvist prövas av Allmänna reklamationsnämnden
           eller svensk allmän domstol.

@@ -5,7 +5,7 @@ import { OutlinedButton } from "./OutlinedButton";
 const links = [
   { href: "/", label: "Hem" },
   { href: "/instruktioner", label: "Så funkar det" },
-  { href: "/om", label: "Om" },
+  { href: "/om", label: "Om oss" },
 ];
 
 export function Logo({ className }: { className?: string }) {
@@ -13,8 +13,8 @@ export function Logo({ className }: { className?: string }) {
     <Image
       src="/images/logo.png"
       alt="Punkaslangen"
-      width={440}
-      height={58}
+      width={560}
+      height={72}
       className={`object-contain object-left ${className ?? "h-9 w-auto sm:h-11"}`}
       priority
     />

@@ -26,7 +26,7 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `NEXT_PUBLIC_SITE_URL` | Publik URL, t.ex. `https://punkaslangen.vercel.app` |
 | `NEXT_PUBLIC_VIMEO_ID` | Endast id:t, t.ex. `123456789` |
 
-Bolagsuppgifter (org.nr, adress, GPSR) är placeholders i `lib/company.ts` tills ni har dem.
+Säljare är Quick2prep AB. Bolagsuppgifter och tillverkare (GPSR) ligger i `lib/company.ts`.
 
 ## Stripe
 
