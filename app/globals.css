@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
+@theme {
+  --color-cream: #fff8f1;
+  --color-ash: #e2e8f0;
+  --color-ink: #000000;
+  --color-voltage-blue: #006eff;
+
+  --font-display: var(--font-editorial-new), ui-serif, Georgia, serif;
+  --font-sans: var(--font-founders-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  --text-body-sm: 16px;
+  --text-body-sm--line-height: 1.5;
+  --text-body-sm--letter-spacing: -0.32px;
+  --text-body: 18px;
+  --text-body--line-height: 1.5;
+  --text-body--letter-spacing: -0.36px;
+  --text-body-lg: 21px;
+  --text-body-lg--line-height: 1.5;
+  --text-body-lg--letter-spacing: -0.42px;
+  --text-subheading: 28px;
+  --text-subheading--line-height: 1.2;
+  --text-subheading--letter-spacing: -0.56px;
+  --text-heading-sm: 38px;
+  --text-heading-sm--line-height: 1.2;
+  --text-heading-sm--letter-spacing: -0.76px;
+  --text-heading: 62px;
+  --text-heading--line-height: 1;
+  --text-heading--letter-spacing: -1.24px;
+  --text-heading-lg: 77px;
+  --text-heading-lg--line-height: 0.95;
+  --text-heading-lg--letter-spacing: -1.54px;
+  --text-display: 120px;
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -2.4px;
+
+  --spacing-7: 7px;
+  --spacing-11: 11px;
+  --spacing-14: 14px;
+  --spacing-20: 20px;
+  --spacing-29: 29px;
+  --spacing-30: 30px;
+  --spacing-35: 35px;
+  --spacing-43: 43px;
+  --spacing-144: 144px;
+  --spacing-150: 150px;
+
+  --radius-pill: 60px;
+  --radius-cards: 0px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --color-cream: #fff8f1;
+  --color-ash: #e2e8f0;
+  --color-ink: #000000;
+  --color-voltage-blue: #006eff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-cream);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-founders-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  font-feature-settings: "clig", "liga";
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-voltage-blue) 22%, transparent);
+  color: var(--color-ink);
 }

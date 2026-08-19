@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Punkaslangen
 
-## Getting Started
+Enprodukts-webshop för Punkaslangen. Next.js på Vercel, Stripe Checkout, frakt via Shipmondo (manuellt i v1).
 
-First, run the development server:
+## Utveckling
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna när ni är redo att ta emot testbetalningar.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Miljövariabler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variabel | Syfte |
+| --- | --- |
+| `STRIPE_SECRET_KEY` | Stripe hemlig nyckel |
+| `STRIPE_WEBHOOK_SECRET` | Webhook-signatur (`whsec_…`) |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Publik Stripe-nyckel (reserv) |
+| `STOCK_QUANTITY` | Startsaldo. Sålda ordrar räknas från completed Stripe-sessioner |
+| `RESEND_API_KEY` | Transaktionsmejl |
+| `RESEND_FROM` | Avsändare, måste vara verifierad hos Resend |
+| `ORDER_NOTIFY_EMAIL` | Er ordernotis |
+| `NEXT_PUBLIC_SITE_URL` | Publik URL, t.ex. `https://punkaslangen.vercel.app` |
+| `NEXT_PUBLIC_VIMEO_ID` | Endast id:t, t.ex. `123456789` |
 
-## Learn More
+Bolagsuppgifter (org.nr, adress, GPSR) är placeholders i `lib/company.ts` tills ni har dem.
 
-To learn more about Next.js, take a look at the following resources:
+## Stripe
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Skapa konto, valuta SEK.
+2. Aktivera Klarna och Swish i Dashboard om de finns för kontot. `automatic_payment_methods` plockar upp det som är påslaget (kort, Apple Pay, Google Pay, m.fl.).
+3. Webhook mot `/api/webhooks/stripe` för eventet `checkout.session.completed`.
+4. Lokalt: `stripe listen --forward-to localhost:3000/api/webhooks/stripe`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Frakt
 
-## Deploy on Vercel
+Ni packar själva. Efter order: boka etikett i [Shipmondo](https://shipmondo.com/se/) (inbyggda priser, inget eget PostNord-avtal krävs i början) och lämna paketet.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Fasta priser i kassan: SE 49 kr, DK/FI 99 kr, NO 129 kr. Norge är utanför EU — hantera VOEC/tull innan ni säljer dit på riktigt.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Koppla GitHub-repot till Vercel. Sätt samma env-variabler där. `NEXT_PUBLIC_SITE_URL` ska vara preview-URL:en tills DNS pekas om.
+
+Befintlig sajt på punkaslangen.se lämnas orörd tills ni har domäninlogg och byter A/CNAME till Vercel.
+
+## Design
+
+Cream `#fff8f1`, voltage blue `#006eff`, outlined pills, Bodoni Moda + Inter som ersättning för Editorial New / Founders Grotesk.
