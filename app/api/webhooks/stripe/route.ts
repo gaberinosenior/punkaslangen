@@ -4,6 +4,7 @@ import { sendOrderEmails } from "@/lib/email";
 import { isShippingCountry } from "@/lib/shipping";
 import { isPunkaslangenOrder, PRODUCT } from "@/lib/product";
 import { getStripe, hasStripe } from "@/lib/stripe";
+import { createShipmondoOrder } from "@/lib/shipmondo";
 import { revalidateStock } from "@/lib/stock";
 import { SHIPPING } from "@/lib/shipping";
 
@@ -40,18 +41,33 @@ export async function POST(request: Request) {
     const quantity = Number(session.metadata?.quantity ?? 1);
     const countryRaw = session.metadata?.country ?? "SE";
     const country = isShippingCountry(countryRaw) ? countryRaw : "SE";
-    const email = session.customer_details?.email;
     const shippingOre = SHIPPING[country].ore;
-    const productOre = PRODUCT.priceOre * (Number.isFinite(quantity) ? quantity : 1);
+    const qty = Number.isFinite(quantity) && quantity > 0 ? quantity : 1;
+    const productOre = PRODUCT.priceOre * qty;
+
+    const fullSession = await getStripe().checkout.sessions.retrieve(session.id);
+    const email = fullSession.customer_details?.email;
 
     await revalidateStock();
+
+    try {
+      await createShipmondoOrder({
+        session: fullSession,
+        quantity: qty,
+        country,
+        productOre,
+        shippingOre,
+      });
+    } catch (error) {
+      console.error("[webhook] shipmondo failed", error);
+    }
 
     if (email) {
       try {
         await sendOrderEmails({
           customerEmail: email,
-          customerName: session.customer_details?.name,
-          quantity: Number.isFinite(quantity) && quantity > 0 ? quantity : 1,
+          customerName: fullSession.customer_details?.name,
+          quantity: qty,
           country,
           productOre,
           shippingOre,

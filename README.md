@@ -24,6 +24,9 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `POSTMARK_FROM` | Avsändare, tillsvidare `Punkaslangen <alexander@magaconsulting.se>` |
 | `POSTMARK_MESSAGE_STREAM` | Stream-id, oftast `outbound` |
 | `ORDER_NOTIFY_EMAIL` | Er ordernotis |
+| `SHIPMONDO_API_USER` | API-användare i Shipmondo |
+| `SHIPMONDO_API_KEY` | API-nyckel i Shipmondo |
+| `SHIPMONDO_TEMPLATE_ID` | Valfri fraktmall (id) så etiketten förifylls |
 | `NEXT_PUBLIC_SITE_URL` | Publik URL, t.ex. `https://punkaslangen.vercel.app` |
 | `NEXT_PUBLIC_VIMEO_ID` | Endast id:t, t.ex. `123456789` |
 
@@ -46,7 +49,7 @@ Egen Postmark-server för Punkaslangen. Avsändare just nu: `alexander@magaconsu
 
 ## Frakt
 
-Ni packar själva. Etikett bokas i [Shipmondo](https://shipmondo.com/se/) (inbyggda priser, inget eget PostNord-avtal krävs i början). Ingen frankeringsmaskin behövs — en vanlig A4-skrivare räcker. Lämna paketet hos PostNord-ombud eller boka upphämtning.
+Ni packar själva. Betalda ordrar skapas i [Shipmondo](https://shipmondo.com/se/) via API. Du bokar och skriver ut etiketten där (A4-skrivare räcker). Ingen frankeringsmaskin. Lämna hos PostNord-ombud eller boka hämtning.
 
 Fasta priser i kassan: SE 49 kr, DK/FI 99 kr, NO 129 kr. Norge är utanför EU — hantera VOEC/tull innan ni säljer dit på riktigt.
 
