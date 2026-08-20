@@ -42,7 +42,7 @@ Kassan skapar priser i Checkout och rör inte befintliga Products. Webhook och l
 
 ## Mejl (Postmark)
 
-Egen Postmark-server för Punkaslangen, inte samma API-token som andra projekt. Verifiera `punkaslangen.se` (DKIM TXT hos **one.com** DNS) och skicka från `hej@punkaslangen.se`. Lägg bara till Postmarks TXT — rör inte A/CNAME förrän DNS ska pekas om till Vercel.
+Egen Postmark-server för Punkaslangen, inte samma API-token som andra projekt. Skicka tills vidare från `hej@quick2prep.se` (redan verifierad). När one.com-inlogget finns: lägg Postmark TXT (DKIM) för `punkaslangen.se` och byt avsändare till `hej@punkaslangen.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
 
 ## Frakt
 

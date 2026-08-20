@@ -47,15 +47,19 @@ export async function POST(request: Request) {
     await revalidateStock();
 
     if (email) {
-      await sendOrderEmails({
-        customerEmail: email,
-        customerName: session.customer_details?.name,
-        quantity: Number.isFinite(quantity) && quantity > 0 ? quantity : 1,
-        country,
-        productOre,
-        shippingOre,
-        sessionId: session.id,
-      });
+      try {
+        await sendOrderEmails({
+          customerEmail: email,
+          customerName: session.customer_details?.name,
+          quantity: Number.isFinite(quantity) && quantity > 0 ? quantity : 1,
+          country,
+          productOre,
+          shippingOre,
+          sessionId: session.id,
+        });
+      } catch (error) {
+        console.error("[webhook] email failed", error);
+      }
     }
   }
 

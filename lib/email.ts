@@ -73,22 +73,35 @@ export async function sendOrderEmails(order: OrderEmail) {
   }
 
   const from = fromAddress();
+  const errors: string[] = [];
 
-  await sendPostmark(token, {
-    to: order.customerEmail,
-    subject: `Tack för din beställning — ${PRODUCT.name}`,
-    text: customerBody,
-    from,
-  });
+  try {
+    await sendPostmark(token, {
+      to: order.customerEmail,
+      subject: `Tack för din beställning — ${PRODUCT.name}`,
+      text: customerBody,
+      from,
+    });
+  } catch (error) {
+    errors.push(`kund: ${error instanceof Error ? error.message : "okänt fel"}`);
+  }
 
   const notify = notifyAddress();
   if (notify) {
-    await sendPostmark(token, {
-      to: notify,
-      subject: `Ny order: ${order.quantity} × ${PRODUCT.name}`,
-      text: ownerBody,
-      from,
-    });
+    try {
+      await sendPostmark(token, {
+        to: notify,
+        subject: `Ny order: ${order.quantity} × ${PRODUCT.name}`,
+        text: ownerBody,
+        from,
+      });
+    } catch (error) {
+      errors.push(`notis: ${error instanceof Error ? error.message : "okänt fel"}`);
+    }
+  }
+
+  if (errors.length > 0) {
+    console.error("[email]", errors.join(" | "));
   }
 }
 
