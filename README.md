@@ -21,7 +21,7 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Publik Stripe-nyckel (reserv) |
 | `STOCK_QUANTITY` | Startsaldo. Sålda ordrar räknas från completed Stripe-sessioner |
 | `POSTMARK_SERVER_TOKEN` | Server-token från Postmark (egen server för Punkaslangen) |
-| `POSTMARK_FROM` | Avsändare, tillsvidare `Punkaslangen <alexander@magaconsulting.se>` |
+| `POSTMARK_FROM` | Avsändare, `Punkaslangen <hej@punkaslangen.se>` |
 | `POSTMARK_MESSAGE_STREAM` | Stream-id, oftast `outbound` |
 | `ORDER_NOTIFY_EMAIL` | Er ordernotis |
 | `SHIPMONDO_API_USER` | API-användare i Shipmondo |
@@ -45,7 +45,7 @@ Kassan skapar priser i Checkout och rör inte befintliga Products. Webhook och l
 
 ## Mejl (Postmark)
 
-Egen Postmark-server för Punkaslangen. Avsändare just nu: `alexander@magaconsulting.se` (enda verifierade signaturen på kontot). Mottagare för ordernotis: `hej@quick2prep.se`. När one.com-inlogget finns: Postmark TXT för `punkaslangen.se` och byt avsändare till `hej@punkaslangen.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
+Egen Postmark-server för Punkaslangen. Avsändare: `hej@punkaslangen.se` (DKIM + Return-Path verifierade). Mottagare för ordernotis: `hej@quick2prep.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
 
 ## Frakt
 
