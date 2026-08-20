@@ -45,7 +45,10 @@ export async function POST(request: Request) {
     const qty = Number.isFinite(quantity) && quantity > 0 ? quantity : 1;
     const productOre = PRODUCT.priceOre * qty;
 
-    const fullSession = await getStripe().checkout.sessions.retrieve(session.id);
+    const fullSession = await getStripe().checkout.sessions.retrieve(
+      session.id,
+      { expand: ["payment_intent"] },
+    );
     const email = fullSession.customer_details?.email;
 
     await revalidateStock();

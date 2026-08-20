@@ -29,6 +29,20 @@ function splitPostal(postal: string): { zip: string; city: string } {
   return { zip: postal.replace(/\s/g, ""), city: "" };
 }
 
+/** Shipmondo `order_id` maxar 50 tecken. Stripe Checkout-id är längre. */
+function externalOrderId(session: Stripe.Checkout.Session): string {
+  const paymentIntent = session.payment_intent;
+  const paymentIntentId =
+    typeof paymentIntent === "string" ? paymentIntent : paymentIntent?.id;
+  if (paymentIntentId && paymentIntentId.length <= 50) {
+    return paymentIntentId;
+  }
+  if (session.id.length <= 50) {
+    return session.id;
+  }
+  return session.id.slice(-50);
+}
+
 function shippingFromSession(session: Stripe.Checkout.Session) {
   const collected = session.collected_information?.shipping_details;
   const legacy = (
@@ -85,7 +99,7 @@ export async function createShipmondoOrder(input: {
   const template = process.env.SHIPMONDO_TEMPLATE_ID?.trim();
 
   const payload: Record<string, unknown> = {
-    order_id: input.session.id,
+    order_id: externalOrderId(input.session),
     ordered_at: new Date(
       (input.session.created ?? Math.floor(Date.now() / 1000)) * 1000,
     ).toISOString(),
@@ -155,6 +169,8 @@ export async function createShipmondoOrder(input: {
     const detail = await response.text();
     throw new Error(`Shipmondo ${response.status}: ${detail}`);
   }
+
+  console.info("[shipmondo] order skapad", externalOrderId(input.session));
 }
 
 export { hasShipmondo };
