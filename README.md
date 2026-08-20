@@ -21,7 +21,7 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Publik Stripe-nyckel (reserv) |
 | `STOCK_QUANTITY` | Startsaldo. Sålda ordrar räknas från completed Stripe-sessioner |
 | `POSTMARK_SERVER_TOKEN` | Server-token från Postmark (egen server för Punkaslangen) |
-| `POSTMARK_FROM` | Avsändare, t.ex. `Punkaslangen <hej@punkaslangen.se>` |
+| `POSTMARK_FROM` | Avsändare, tillsvidare `Punkaslangen <alexander@magaconsulting.se>` |
 | `POSTMARK_MESSAGE_STREAM` | Stream-id, oftast `outbound` |
 | `ORDER_NOTIFY_EMAIL` | Er ordernotis |
 | `NEXT_PUBLIC_SITE_URL` | Publik URL, t.ex. `https://punkaslangen.vercel.app` |
@@ -42,7 +42,7 @@ Kassan skapar priser i Checkout och rör inte befintliga Products. Webhook och l
 
 ## Mejl (Postmark)
 
-Egen Postmark-server för Punkaslangen, inte samma API-token som andra projekt. Skicka tills vidare från `hej@quick2prep.se` (redan verifierad). När one.com-inlogget finns: lägg Postmark TXT (DKIM) för `punkaslangen.se` och byt avsändare till `hej@punkaslangen.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
+Egen Postmark-server för Punkaslangen. Avsändare just nu: `alexander@magaconsulting.se` (enda verifierade signaturen på kontot). Mottagare för ordernotis: `hej@quick2prep.se`. När one.com-inlogget finns: Postmark TXT för `punkaslangen.se` och byt avsändare till `hej@punkaslangen.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
 
 ## Frakt
 
