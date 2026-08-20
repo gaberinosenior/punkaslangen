@@ -23,7 +23,7 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `POSTMARK_SERVER_TOKEN` | Server-token från Postmark (egen server för Punkaslangen) |
 | `POSTMARK_FROM` | Avsändare, `Punkaslangen <hej@punkaslangen.se>` |
 | `POSTMARK_MESSAGE_STREAM` | Stream-id, oftast `outbound` |
-| `ORDER_NOTIFY_EMAIL` | Er ordernotis |
+| `ORDER_NOTIFY_EMAIL` | Er ordernotis (`hej@punkaslangen.se`) |
 | `SHIPMONDO_API_USER` | API-användare i Shipmondo |
 | `SHIPMONDO_API_KEY` | API-nyckel i Shipmondo |
 | `SHIPMONDO_TEMPLATE_ID` | Valfri fraktmall (id) så etiketten förifylls |
@@ -45,7 +45,7 @@ Kassan skapar priser i Checkout och rör inte befintliga Products. Webhook och l
 
 ## Mejl (Postmark)
 
-Egen Postmark-server för Punkaslangen. Avsändare: `hej@punkaslangen.se` (DKIM + Return-Path verifierade). Mottagare för ordernotis: `hej@quick2prep.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
+Egen Postmark-server för Punkaslangen. Avsändare: `hej@punkaslangen.se` (DKIM + Return-Path verifierade). Mottagare för ordernotis: `hej@punkaslangen.se`. Rör inte A/CNAME förrän DNS ska pekas om till Vercel.
 
 ## Frakt
 
