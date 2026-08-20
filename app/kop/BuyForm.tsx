@@ -13,13 +13,12 @@ import {
 
 type Props = {
   stock: number;
-  stripeConfigured: boolean;
 };
 
 const fieldClass =
   "mt-3 w-full rounded-input border border-ash bg-fog px-4 py-3 text-body text-carbon outline-none focus:border-ochre focus:ring-2 focus:ring-ochre";
 
-export function BuyForm({ stock, stripeConfigured }: Props) {
+export function BuyForm({ stock }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [country, setCountry] = useState<ShippingCountry>("SE");
   const [error, setError] = useState<string | null>(null);
@@ -34,12 +33,6 @@ export function BuyForm({ stock, stripeConfigured }: Props) {
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
     setError(null);
-
-    if (!stripeConfigured) {
-      setError("Kassan är inte kopplad ännu. Stripe-nycklar saknas.");
-      return;
-    }
-
     setPending(true);
     try {
       const response = await fetch("/api/checkout", {

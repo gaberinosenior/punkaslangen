@@ -1,4 +1,5 @@
 import { revalidateTag, unstable_cache } from "next/cache";
+import { isPunkaslangenOrder } from "./product";
 import { hasStripe, getStripe } from "./stripe";
 
 const STOCK_TAG = "stock";
@@ -25,6 +26,7 @@ async function countSoldFromStripe(): Promise<number> {
     });
 
     for (const session of sessions.data) {
+      if (!isPunkaslangenOrder(session.metadata)) continue;
       const qty = Number(session.metadata?.quantity ?? 1);
       sold += Number.isFinite(qty) && qty > 0 ? qty : 1;
     }

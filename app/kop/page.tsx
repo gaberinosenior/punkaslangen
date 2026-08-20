@@ -5,17 +5,17 @@ import { ProductPhoto } from "@/components/ProductPhoto";
 import { SectionHeadline } from "@/components/SectionHeadline";
 import { formatSek } from "@/lib/format";
 import { PRICE_KR } from "@/lib/product";
-import { hasStripe } from "@/lib/stripe";
 import { getAvailableStock } from "@/lib/stock";
 
 export const metadata: Metadata = {
   title: "Beställ",
-  description: "Beställ Punkaslangen. 99 kr inkl. moms. Frakt tillkommer.",
+  description: "Beställ Punkaslangen. 129 kr inkl. moms. Frakt tillkommer.",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function BuyPage() {
   const stock = await getAvailableStock();
-  const stripeConfigured = hasStripe();
 
   return (
     <>
@@ -33,7 +33,7 @@ export default async function BuyPage() {
           </BodyCopy>
         </div>
         <div className="mt-10">
-          <BuyForm stock={stock} stripeConfigured={stripeConfigured} />
+          <BuyForm stock={stock} />
         </div>
         {stock > 0 && stock <= 8 ? (
           <p className="mt-7 text-center text-caption font-bold text-ochre">

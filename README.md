@@ -30,9 +30,13 @@ Säljare är Quick2prep AB. Bolagsuppgifter och tillverkare (GPSR) ligger i `lib
 
 ## Stripe
 
-1. Skapa konto, valuta SEK.
-2. Aktivera Klarna och Swish i Dashboard om de finns för kontot. `automatic_payment_methods` plockar upp det som är påslaget (kort, Apple Pay, Google Pay, m.fl.).
-3. Webhook mot `/api/webhooks/stripe` för eventet `checkout.session.completed`.
+Använd ett **eget Stripe-konto** för Punkaslangen (Create account i Dashboard), inte live-nycklarna från en annan butik. Börja i **testläge**. Rör inte den andra butikens webhook-URL:er.
+
+Kassan skapar priser i Checkout och rör inte befintliga Products. Webhook och lager räknar bara sessioner med `metadata.sku = punkaslangen`.
+
+1. Nytt konto, valuta SEK. Hämta testnycklar (`sk_test_…`, `pk_test_…`).
+2. Aktivera Klarna och Swish när ni går live, om de finns för kontot.
+3. Webhook mot `https://<er-url>/api/webhooks/stripe` för `checkout.session.completed`. Ny endpoint — ändra inte den andra butikens.
 4. Lokalt: `stripe listen --forward-to localhost:3000/api/webhooks/stripe`.
 
 ## Frakt

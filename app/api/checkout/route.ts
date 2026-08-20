@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { PRODUCT } from "@/lib/product";
 import { isShippingCountry, SHIPPING } from "@/lib/shipping";
-import { getStripe, hasStripe, siteUrl } from "@/lib/stripe";
+import { getStripe, hasStripe, checkoutReturnUrl } from "@/lib/stripe";
 import { getAvailableStock } from "@/lib/stock";
 
 export async function POST(request: Request) {
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
   const shipping = SHIPPING[country];
   const stripe = getStripe();
-  const origin = siteUrl();
+  const origin = checkoutReturnUrl(request);
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -60,6 +60,11 @@ export async function POST(request: Request) {
       sku: PRODUCT.sku,
       quantity: String(quantity),
       country,
+    },
+    payment_intent_data: {
+      metadata: {
+        sku: PRODUCT.sku,
+      },
     },
     line_items: [
       {

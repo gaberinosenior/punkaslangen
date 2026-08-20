@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { sendOrderEmails } from "@/lib/email";
 import { isShippingCountry } from "@/lib/shipping";
-import { PRODUCT } from "@/lib/product";
+import { isPunkaslangenOrder, PRODUCT } from "@/lib/product";
 import { getStripe, hasStripe } from "@/lib/stripe";
 import { revalidateStock } from "@/lib/stock";
 import { SHIPPING } from "@/lib/shipping";
@@ -34,6 +34,9 @@ export async function POST(request: Request) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+    if (!isPunkaslangenOrder(session.metadata)) {
+      return NextResponse.json({ received: true, ignored: true });
+    }
     const quantity = Number(session.metadata?.quantity ?? 1);
     const countryRaw = session.metadata?.country ?? "SE";
     const country = isShippingCountry(countryRaw) ? countryRaw : "SE";

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { company } from "@/lib/company";
+import { formatSek } from "@/lib/format";
+import { PRICE_KR } from "@/lib/product";
 import { Logo } from "./Nav";
 
 const links = [
@@ -15,7 +17,8 @@ export function Footer() {
         <div>
           <Logo className="h-9 w-auto" />
           <p className="mt-4 max-w-[28rem] text-caption text-paper/80">
-            En 4 meter lång räddare i nöden. 99 kr inkl. moms. Frakt tillkommer.
+            En 4 meter lång räddare i nöden. {formatSek(PRICE_KR)} inkl. moms.
+            Frakt tillkommer.
           </p>
         </div>
         <ul className="flex flex-wrap gap-x-8 gap-y-3">
