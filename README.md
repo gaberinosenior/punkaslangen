@@ -19,7 +19,7 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `STRIPE_SECRET_KEY` | Stripe hemlig nyckel |
 | `STRIPE_WEBHOOK_SECRET` | Webhook-signatur (`whsec_…`) |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Publik Stripe-nyckel (reserv) |
-| `STOCK_QUANTITY` | Startsaldo. Sålda ordrar räknas från completed Stripe-sessioner |
+| `STOCK_QUANTITY` | Valfritt lagertak. Tomt = inköp vid behov, ingen slutsåld |
 | `POSTMARK_SERVER_TOKEN` | Server-token från Postmark (egen server för Punkaslangen) |
 | `POSTMARK_FROM` | Avsändare, `Punkaslangen <hej@punkaslangen.se>` |
 | `POSTMARK_MESSAGE_STREAM` | Stream-id, oftast `outbound` |

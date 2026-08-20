@@ -4,10 +4,14 @@ import { hasStripe, getStripe } from "./stripe";
 
 const STOCK_TAG = "stock";
 
+const ON_DEMAND_STOCK = 10_000;
+
+/** Empty STOCK_QUANTITY = buy from supplier as needed, never “slutsåld”. */
 export function initialStock(): number {
-  const raw = process.env.STOCK_QUANTITY;
-  const parsed = raw ? Number(raw) : 50;
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 50;
+  const raw = process.env.STOCK_QUANTITY?.trim();
+  if (!raw) return ON_DEMAND_STOCK;
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : ON_DEMAND_STOCK;
 }
 
 async function countSoldFromStripe(): Promise<number> {
