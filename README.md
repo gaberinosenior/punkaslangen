@@ -20,8 +20,9 @@ Sajten fungerar utan Stripe-nycklar (kassan visar då ett fel). Fyll i nycklarna
 | `STRIPE_WEBHOOK_SECRET` | Webhook-signatur (`whsec_…`) |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Publik Stripe-nyckel (reserv) |
 | `STOCK_QUANTITY` | Startsaldo. Sålda ordrar räknas från completed Stripe-sessioner |
-| `RESEND_API_KEY` | Transaktionsmejl |
-| `RESEND_FROM` | Avsändare, måste vara verifierad hos Resend |
+| `POSTMARK_SERVER_TOKEN` | Server-token från Postmark (egen server för Punkaslangen) |
+| `POSTMARK_FROM` | Avsändare, t.ex. `Punkaslangen <hej@punkaslangen.se>` |
+| `POSTMARK_MESSAGE_STREAM` | Stream-id, oftast `outbound` |
 | `ORDER_NOTIFY_EMAIL` | Er ordernotis |
 | `NEXT_PUBLIC_SITE_URL` | Publik URL, t.ex. `https://punkaslangen.vercel.app` |
 | `NEXT_PUBLIC_VIMEO_ID` | Endast id:t, t.ex. `123456789` |
@@ -39,9 +40,13 @@ Kassan skapar priser i Checkout och rör inte befintliga Products. Webhook och l
 3. Webhook mot `https://<er-url>/api/webhooks/stripe` för `checkout.session.completed`. Ny endpoint — ändra inte den andra butikens.
 4. Lokalt: `stripe listen --forward-to localhost:3000/api/webhooks/stripe`.
 
+## Mejl (Postmark)
+
+Egen Postmark-server för Punkaslangen, inte samma API-token som andra projekt. Verifiera `punkaslangen.se` (DKIM TXT hos **one.com** DNS) och skicka från `hej@punkaslangen.se`. Lägg bara till Postmarks TXT — rör inte A/CNAME förrän DNS ska pekas om till Vercel.
+
 ## Frakt
 
-Ni packar själva. Efter order: boka etikett i [Shipmondo](https://shipmondo.com/se/) (inbyggda priser, inget eget PostNord-avtal krävs i början) och lämna paketet.
+Ni packar själva. Etikett bokas i [Shipmondo](https://shipmondo.com/se/) (inbyggda priser, inget eget PostNord-avtal krävs i början). Ingen frankeringsmaskin behövs — en vanlig A4-skrivare räcker. Lämna paketet hos PostNord-ombud eller boka upphämtning.
 
 Fasta priser i kassan: SE 49 kr, DK/FI 99 kr, NO 129 kr. Norge är utanför EU — hantera VOEC/tull innan ni säljer dit på riktigt.
 

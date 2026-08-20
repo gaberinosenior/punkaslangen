@@ -1,4 +1,3 @@
-import { Resend } from "resend";
 import { company } from "./company";
 import { PRODUCT } from "./product";
 import { formatSek, oreToKr } from "./format";
@@ -16,15 +15,22 @@ type OrderEmail = {
 };
 
 function fromAddress(): string {
-  return process.env.RESEND_FROM || `${company.name} <${company.email}>`;
+  return (
+    process.env.POSTMARK_FROM?.trim() ||
+    `${company.name} <${company.email}>`
+  );
 }
 
 function notifyAddress(): string | undefined {
-  return process.env.ORDER_NOTIFY_EMAIL;
+  return process.env.ORDER_NOTIFY_EMAIL?.trim() || undefined;
+}
+
+function messageStream(): string {
+  return process.env.POSTMARK_MESSAGE_STREAM?.trim() || "outbound";
 }
 
 export async function sendOrderEmails(order: OrderEmail) {
-  const key = process.env.RESEND_API_KEY;
+  const token = process.env.POSTMARK_SERVER_TOKEN?.trim();
   const total = formatSek(oreToKr(order.productOre + order.shippingOre));
   const product = formatSek(oreToKr(order.productOre));
   const shipping = formatSek(oreToKr(order.shippingOre));
@@ -59,30 +65,55 @@ export async function sendOrderEmails(order: OrderEmail) {
     "Boka etikett i Shipmondo och lämna paketet.",
   ].join("\n");
 
-  if (!key) {
-    console.info("[email] RESEND_API_KEY saknas — mejl loggas istället");
+  if (!token) {
+    console.info("[email] POSTMARK_SERVER_TOKEN saknas — mejl loggas istället");
     console.info(customerBody);
     console.info(ownerBody);
     return;
   }
 
-  const resend = new Resend(key);
   const from = fromAddress();
 
-  await resend.emails.send({
-    from,
+  await sendPostmark(token, {
     to: order.customerEmail,
     subject: `Tack för din beställning — ${PRODUCT.name}`,
     text: customerBody,
+    from,
   });
 
   const notify = notifyAddress();
   if (notify) {
-    await resend.emails.send({
-      from,
+    await sendPostmark(token, {
       to: notify,
       subject: `Ny order: ${order.quantity} × ${PRODUCT.name}`,
       text: ownerBody,
+      from,
     });
+  }
+}
+
+async function sendPostmark(
+  token: string,
+  message: { to: string; subject: string; text: string; from: string },
+) {
+  const response = await fetch("https://api.postmarkapp.com/email", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Postmark-Server-Token": token,
+    },
+    body: JSON.stringify({
+      From: message.from,
+      To: message.to,
+      Subject: message.subject,
+      TextBody: message.text,
+      MessageStream: messageStream(),
+    }),
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Postmark ${response.status}: ${detail}`);
   }
 }
