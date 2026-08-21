@@ -1,6 +1,12 @@
 import { company } from "./company";
 import { PRODUCT } from "./product";
-import { formatSek, oreToKr } from "./format";
+import {
+  exclVatOre,
+  formatSek,
+  formatSekOre,
+  oreToKr,
+  vatOre,
+} from "./format";
 import type { ShippingCountry } from "./shipping";
 import { SHIPPING } from "./shipping";
 
@@ -12,6 +18,7 @@ type OrderEmail = {
   productOre: number;
   shippingOre: number;
   sessionId: string;
+  paymentIntentId?: string | null;
 };
 
 function fromAddress(): string {
@@ -29,27 +36,68 @@ function messageStream(): string {
   return process.env.POSTMARK_MESSAGE_STREAM?.trim() || "outbound";
 }
 
+function orderReference(sessionId: string, paymentIntentId?: string | null): string {
+  if (paymentIntentId?.trim()) return paymentIntentId.trim();
+  if (sessionId.length <= 24) return sessionId;
+  return sessionId.slice(-24);
+}
+
+function receiptDate(now = new Date()): string {
+  return new Intl.DateTimeFormat("sv-SE", {
+    dateStyle: "long",
+    timeZone: "Europe/Stockholm",
+  }).format(now);
+}
+
+function customerReceipt(order: OrderEmail): string {
+  const totalOre = order.productOre + order.shippingOre;
+  const vat = PRODUCT.vatPercent;
+  const total = formatSek(oreToKr(totalOre));
+  const product = formatSek(oreToKr(order.productOre));
+  const shipping = formatSek(oreToKr(order.shippingOre));
+  const countryLabel = SHIPPING[order.country].label;
+  const ref = orderReference(order.sessionId, order.paymentIntentId);
+  const buyer = order.customerName?.trim() || "Kund";
+
+  return [
+    `Kvitto — ${company.name}`,
+    receiptDate(),
+    "",
+    `Tack för din beställning${order.customerName ? `, ${order.customerName}` : ""}!`,
+    "",
+    "Säljare",
+    company.legalName,
+    `Org.nr ${company.orgNr}`,
+    company.address,
+    `${company.postal}, ${company.country}`,
+    company.email,
+    "",
+    "Köpare",
+    buyer,
+    order.customerEmail,
+    "",
+    "Rader (priser inkl. moms)",
+    `${order.quantity} × ${PRODUCT.name} (${PRODUCT.length}) — ${product}`,
+    `Frakt — ${countryLabel} — ${shipping}`,
+    "",
+    `Belopp exkl. moms — ${formatSekOre(exclVatOre(totalOre, vat))}`,
+    `Moms ${vat} % — ${formatSekOre(vatOre(totalOre, vat))}`,
+    `Totalt att betala — ${total}`,
+    "",
+    "Betalsätt: kort via Stripe",
+    `Orderreferens: ${ref}`,
+    "",
+    "Vi packar och skickar så snart vi kan. Du får spårning när paketet är på väg.",
+  ].join("\n");
+}
+
 export async function sendOrderEmails(order: OrderEmail) {
   const token = process.env.POSTMARK_SERVER_TOKEN?.trim();
   const total = formatSek(oreToKr(order.productOre + order.shippingOre));
   const product = formatSek(oreToKr(order.productOre));
   const shipping = formatSek(oreToKr(order.shippingOre));
   const countryLabel = SHIPPING[order.country].label;
-
-  const customerBody = [
-    `Tack för din beställning${order.customerName ? `, ${order.customerName}` : ""}!`,
-    "",
-    `${order.quantity} × ${PRODUCT.name} — ${product}`,
-    `Frakt (${countryLabel}) — ${shipping}`,
-    `Totalt — ${total} (inkl. moms)`,
-    "",
-    "Vi packar och skickar så snart vi kan. Du får spårning när paketet är på väg.",
-    "",
-    `Orderreferens: ${order.sessionId}`,
-    "",
-    company.name,
-    company.email,
-  ].join("\n");
+  const customerBody = customerReceipt(order);
 
   const ownerBody = [
     "Ny order på Punkaslangen",
@@ -78,7 +126,7 @@ export async function sendOrderEmails(order: OrderEmail) {
   try {
     await sendPostmark(token, {
       to: order.customerEmail,
-      subject: `Tack för din beställning — ${PRODUCT.name}`,
+      subject: `Kvitto — ${PRODUCT.name}`,
       text: customerBody,
       from,
     });

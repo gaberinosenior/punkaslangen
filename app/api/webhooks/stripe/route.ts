@@ -67,6 +67,11 @@ export async function POST(request: Request) {
 
     if (email) {
       try {
+        const paymentIntent = fullSession.payment_intent;
+        const paymentIntentId =
+          typeof paymentIntent === "string"
+            ? paymentIntent
+            : paymentIntent?.id;
         await sendOrderEmails({
           customerEmail: email,
           customerName: fullSession.customer_details?.name,
@@ -75,6 +80,7 @@ export async function POST(request: Request) {
           productOre,
           shippingOre,
           sessionId: session.id,
+          paymentIntentId,
         });
       } catch (error) {
         console.error("[webhook] email failed", error);
