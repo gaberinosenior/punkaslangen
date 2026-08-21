@@ -6,6 +6,7 @@ import { company } from "@/lib/company";
 export const metadata: Metadata = {
   title: "Integritet",
   description: "Integritetspolicy för Punkaslangen.",
+  alternates: { canonical: "/integritet" },
 };
 
 export default function PrivacyPage() {

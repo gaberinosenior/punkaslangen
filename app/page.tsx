@@ -1,12 +1,17 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { BodyCopy } from "@/components/BodyCopy";
 import { Callout } from "@/components/Callout";
+import { FaqList } from "@/components/FaqList";
 import { CarIllustration, TractorIllustration } from "@/components/Illustrations";
+import { JsonLd } from "@/components/JsonLd";
 import { OutlinedButton } from "@/components/OutlinedButton";
 import { ProductPhoto } from "@/components/ProductPhoto";
 import { SectionHeadline } from "@/components/SectionHeadline";
 import { VimeoEmbed } from "@/components/VimeoEmbed";
 import { formatSek } from "@/lib/format";
 import { PRICE_KR, PRODUCT } from "@/lib/product";
+import { faqNode, homeFaqs, productNode } from "@/lib/seo";
 import { getAvailableStock } from "@/lib/stock";
 
 const steps = [
@@ -22,6 +27,15 @@ const facts = [
   { label: "Plats", value: "Handskfacket" },
 ];
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Punkaslangen — punkaslang vid pyspunka",
+  },
+  description:
+    "Punkaslang för pyspunka. 4 meter, ingen el. Överför luft från däck till däck på 2–3 minuter och kör vidare till verkstad. 129 kr inkl. moms.",
+  alternates: { canonical: "/" },
+};
+
 export default async function HomePage() {
   const stock = await getAvailableStock();
   const soldOut = stock <= 0;
@@ -29,13 +43,23 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [productNode(), faqNode(homeFaqs)],
+        }}
+      />
+
       <section className="relative overflow-hidden bg-stone px-6 pb-16 pt-4 md:px-12">
         <CarIllustration className="pointer-events-none absolute -left-8 bottom-0 hidden w-[42%] max-w-[380px] opacity-90 md:block" />
         <TractorIllustration className="pointer-events-none absolute -right-10 bottom-2 hidden w-[38%] max-w-[340px] opacity-90 md:block" />
         <div className="relative z-10">
           <ProductPhoto priority />
           <h1 className="mt-6 text-center text-[clamp(1.75rem,4.5vw,2.35rem)] font-bold leading-tight text-carbon">
-            Slipp bärgning. Slipp bli ståendes.
+            Punkaslangen
+            <span className="mt-2 block text-[clamp(1.2rem,3.2vw,1.65rem)]">
+              Slipp bärgning. Slipp bli ståendes.
+            </span>
           </h1>
           <div className="mt-8 flex justify-center">
             {soldOut ? (
@@ -78,7 +102,7 @@ export default async function HomePage() {
               {i < steps.length - 1 ? (
                 <span className="hidden h-px w-full bg-ochre/40 sm:block" />
               ) : null}
-              <h3 className="text-subheading font-bold text-carbon">{step.title}</h3>
+              <h2 className="text-subheading font-bold text-carbon">{step.title}</h2>
             </li>
           ))}
         </ol>
@@ -87,7 +111,7 @@ export default async function HomePage() {
             <p>
               Anslut ett friskt däck, koppla på pyspunkan, vänta två–tre minuter.
               Koppla bort slangen och kör vidare — med sänkt fart — till
-              verkstad.
+              närmaste däckverkstad.
             </p>
           </BodyCopy>
         </div>
@@ -135,6 +159,18 @@ export default async function HomePage() {
             </p>
           </BodyCopy>
         </div>
+      </section>
+
+      <section className="bg-fog px-6 py-20 md:px-12 md:py-24">
+        <SectionHeadline>vanliga frågor</SectionHeadline>
+        <FaqList items={homeFaqs} />
+        <p className="mx-auto mt-10 max-w-[560px] text-center text-caption text-muted">
+          Mer om vad du gör vid punka finns på{" "}
+          <Link href="/pyspunka" className="font-bold text-carbon underline">
+            Vid pyspunka
+          </Link>
+          .
+        </p>
         <div className="mt-10 flex justify-center">
           {soldOut ? (
             <p className="font-bold text-carbon">Slutsåld just nu</p>

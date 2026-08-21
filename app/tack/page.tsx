@@ -9,6 +9,7 @@ import { SHIPPING, isShippingCountry } from "@/lib/shipping";
 export const metadata: Metadata = {
   title: "Tack",
   description: "Tack för din beställning av Punkaslangen.",
+  robots: { index: false, follow: false },
 };
 
 type Props = {

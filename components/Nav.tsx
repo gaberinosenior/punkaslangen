@@ -3,7 +3,7 @@ import Link from "next/link";
 import { OutlinedButton } from "./OutlinedButton";
 
 const links = [
-  { href: "/", label: "Hem" },
+  { href: "/pyspunka", label: "Vid punka" },
   { href: "/instruktioner", label: "Så funkar det" },
   { href: "/om", label: "Om oss" },
 ];

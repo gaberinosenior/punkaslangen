@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { publicSiteUrl } from "@/lib/site";
 
 let stripeClient: Stripe | null = null;
 
@@ -19,10 +20,7 @@ export function hasStripe(): boolean {
 }
 
 export function siteUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "http://localhost:3000"
-  );
+  return publicSiteUrl();
 }
 
 /** Prefer the browser origin on localhost so Stripe does not return to a dead port. */

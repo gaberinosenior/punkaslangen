@@ -5,6 +5,9 @@ import { PRICE_KR } from "@/lib/product";
 import { Logo } from "./Nav";
 
 const links = [
+  { href: "/pyspunka", label: "Vid punka" },
+  { href: "/instruktioner", label: "Så funkar det" },
+  { href: "/om", label: "Om oss" },
   { href: "/leverans", label: "Leverans" },
   { href: "/villkor", label: "Villkor" },
   { href: "/integritet", label: "Integritet" },

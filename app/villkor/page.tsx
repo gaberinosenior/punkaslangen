@@ -8,6 +8,7 @@ import { PRICE_KR } from "@/lib/product";
 export const metadata: Metadata = {
   title: "Köpvillkor",
   description: "Allmänna villkor för köp av Punkaslangen.",
+  alternates: { canonical: "/villkor" },
 };
 
 export default function TermsPage() {

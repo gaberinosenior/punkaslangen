@@ -3,7 +3,7 @@ export const PRODUCT = {
   name: "Punkaslangen",
   tagline: "Första hjälpen vid pyspunka",
   description:
-    "En 4 meter lång, extra smidig och mjuk gummislang med pumpnipplar. Koppla mellan ett friskt däck och ett däck med pyspunka, vänta 2–3 minuter, och kör vidare till närmaste verkstad.",
+    "Punkaslangen är en 4 meter lång punkaslang med pumpnipplar. Koppla mellan ett friskt däck och ett däck med pyspunka, vänta 2–3 minuter, och kör vidare till närmaste verkstad. Ingen el, inget krångel.",
   length: "4 meter",
   priceOre: 12900,
   currency: "sek",

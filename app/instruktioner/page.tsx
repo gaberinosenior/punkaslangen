@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { ArticlePage } from "@/components/ArticlePage";
 import { BodyCopy } from "@/components/BodyCopy";
+import { JsonLd } from "@/components/JsonLd";
 import { OutlinedButton } from "@/components/OutlinedButton";
+import { howToNode } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Instruktioner",
+  title: "Så använder du Punkaslangen",
   description:
-    "Så använder du Punkaslangen vid pyspunka — tre minuter, sedan vidare till verkstad.",
+    "Så kopplar du punkaslangen vid pyspunka: friskt däck, läckande däck, två–tre minuter. Sedan vidare till verkstad.",
+  alternates: { canonical: "/instruktioner" },
 };
 
 export default function InstructionsPage() {
@@ -15,6 +18,7 @@ export default function InstructionsPage() {
       title="instruktioner"
       cta={<OutlinedButton href="/kop">Beställ</OutlinedButton>}
     >
+      <JsonLd data={{ "@context": "https://schema.org", ...howToNode() }} />
       <BodyCopy>
         <p>
           Montera Punkaslangen mellan det punkterade däcket och ett däck med

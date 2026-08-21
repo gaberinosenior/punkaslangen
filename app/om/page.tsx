@@ -6,7 +6,8 @@ import { OutlinedButton } from "@/components/OutlinedButton";
 export const metadata: Metadata = {
   title: "Om oss",
   description:
-    "Uppfinnaren till Punkaslangen, Pertti Hirvonen, och historien bakom produkten.",
+    "Uppfinnaren till Punkaslangen, Pertti Hirvonen, och historien bakom punkaslangen.",
+  alternates: { canonical: "/om" },
 };
 
 export default function AboutPage() {

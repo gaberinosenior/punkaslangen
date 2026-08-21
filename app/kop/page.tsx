@@ -8,8 +8,10 @@ import { PRICE_KR } from "@/lib/product";
 import { getAvailableStock } from "@/lib/stock";
 
 export const metadata: Metadata = {
-  title: "Beställ",
-  description: "Beställ Punkaslangen. 129 kr inkl. moms. Frakt tillkommer.",
+  title: "Beställ punkaslang",
+  description:
+    "Köp Punkaslangen — 4 m punkaslang vid pyspunka. 129 kr inkl. moms. Frakt till Sverige och Norden.",
+  alternates: { canonical: "/kop" },
 };
 
 export const dynamic = "force-dynamic";

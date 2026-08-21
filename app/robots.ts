@@ -1,7 +1,17 @@
 import type { MetadataRoute } from "next";
 
+const SITE = "https://punkaslangen.se";
+
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/" },
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/tack", "/api/"],
+      },
+    ],
+    sitemap: `${SITE}/sitemap.xml`,
+    host: SITE,
   };
 }

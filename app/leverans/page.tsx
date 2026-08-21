@@ -7,6 +7,7 @@ import { shippingKr } from "@/lib/shipping";
 export const metadata: Metadata = {
   title: "Leverans",
   description: "Frakt, leveranstider och returer för Punkaslangen.",
+  alternates: { canonical: "/leverans" },
 };
 
 export default function ShippingPage() {
