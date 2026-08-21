@@ -7,11 +7,6 @@ export const defaultTitle = "Punkaslangen — punkaslang vid pyspunka";
 export const defaultDescription =
   "Punkaslangen är en 4 meter lång punkaslang med pumpnipplar. Överför luft från ett friskt däck till ett däck med pyspunka på 2–3 minuter — utan el. 129 kr inkl. moms.";
 
-export const ogImage = {
-  url: "/images/punkaslangen.png",
-  alt: "Punkaslangen — 4 meter punkaslang med ventilnipplar",
-} as const;
-
 export const homeFaqs = [
   {
     q: "Vad är en punkaslang?",

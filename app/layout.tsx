@@ -7,7 +7,6 @@ import {
   defaultDescription,
   defaultTitle,
   graphJsonLd,
-  ogImage,
 } from "@/lib/seo";
 import { publicSiteUrl } from "@/lib/site";
 import "./globals.css";
@@ -44,13 +43,11 @@ export const metadata: Metadata = {
     locale: "sv_SE",
     type: "website",
     siteName: "Punkaslangen",
-    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: defaultTitle,
     description: defaultDescription,
-    images: [ogImage.url],
   },
 };
 
