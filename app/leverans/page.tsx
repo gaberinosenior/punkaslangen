@@ -15,8 +15,8 @@ export default function ShippingPage() {
     <ArticlePage title="leverans">
       <BodyCopy>
         <p>
-          Vi packar själva och skickar med PostNord via Shipmondo. Frakt
-          tillkommer alltid — den ingår inte i produktpriset.
+          Vi packar själva och skickar med DHL Service Point via Shipmondo.
+          Frakt tillkommer alltid — den ingår inte i produktpriset.
         </p>
         <p>
           Sverige {formatSek(shippingKr("SE"))} · Danmark och Finland{" "}

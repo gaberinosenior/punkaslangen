@@ -6,9 +6,9 @@ export const SHIPPING: Record<
   ShippingCountry,
   { ore: number; label: string; note?: string }
 > = {
-  SE: { ore: 4900, label: "Sverige · PostNord" },
-  DK: { ore: 9900, label: "Danmark · PostNord" },
-  FI: { ore: 9900, label: "Finland · PostNord" },
+  SE: { ore: 4900, label: "Sverige · DHL Service Point" },
+  DK: { ore: 9900, label: "Danmark · DHL" },
+  FI: { ore: 9900, label: "Finland · DHL" },
   NO: {
     ore: 12900,
     label: "Norge",
